@@ -1,6 +1,8 @@
 ## How to run
 
-First, run the development server:
+Ensure Node JS is installed
+
+Then, run the development server:
 
 ```bash
 npm run dev
