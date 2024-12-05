@@ -14,7 +14,6 @@ export async function POST(req: Request) {
 		temperature: 0.7, // Adds some creativity
 		maxTokens: 100, // Ensures we get a concise response
 	});
-	console.log(text);
 
 	return new Response(text);
 }
@@ -28,8 +27,8 @@ async function getDiffsFromCommit(repoName: string, commitId: string) {
 		},
 	});
 
-	console.log("Response status:", response.status);
-	console.log("Response status text:", response.statusText);
+	// console.log("Response status:", response.status);
+	// console.log("Response status text:", response.statusText);
 
 	if (!response.ok) {
 		const errorText = await response.text();
@@ -68,7 +67,7 @@ ${diff.patch || "No patch available"}
 		)
 		.join("\n");
 
-	return `Generate a single, concise changelog entry (1-2 sentences) based on the following commit changes.
+	const prompt =  `Generate a single, concise changelog entry (1-2 sentences) based on the following commit changes.
 Focus mainly on the business impact and user-facing changes but touch on technical details if necessary.
 Original commit message: "${commitMessage}"
 
@@ -77,6 +76,8 @@ Changes made:
 ${diffsSummary}
 
 Changelog entry:`;
+
+return prompt;
 }
 
 interface DiffFile {
