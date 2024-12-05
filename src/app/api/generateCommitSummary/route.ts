@@ -27,8 +27,6 @@ async function getDiffsFromCommit(repoName: string, commitId: string) {
 		},
 	});
 
-	// console.log("Response status:", response.status);
-	// console.log("Response status text:", response.statusText);
 
 	if (!response.ok) {
 		const errorText = await response.text();

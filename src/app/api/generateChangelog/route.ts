@@ -5,7 +5,6 @@ import { generateText } from "ai";
 
 export async function POST(req: Request) {
 	const { commitSummaries, repoName } = await req.json();
-    console.log(commitSummaries, repoName);
 	const {text} = await generateText({
 		model: openai("gpt-4o-mini"),
         prompt: await createDetailedPrompt(commitSummaries, repoName),

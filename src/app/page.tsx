@@ -19,10 +19,20 @@ export default function Home() {
 	};
 
 	return (
-		<main className="min-h-screen p-8">
-			<form onSubmit={handleSubmit} className="max-w-md mx-auto">
-				<input type="text" name="repo" placeholder="Enter GitHub repository URL" className="w-full p-2 border rounded text-black" required />
-				<button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+		<main className="min-h-screen p-8 flex items-center justify-center flex-col">
+			<h1 className="text-3xl font-bold mb-3 opacity-70">Changelog Generator</h1>
+			<form onSubmit={handleSubmit} className="max-w-md w-full">
+				<input 
+					type="text" 
+					name="repo" 
+					placeholder="Enter GitHub repository URL" 
+					className="w-full p-2 border-2 border-b-0 rounded-t text-black focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 border-neutral-900/30" 
+					required 
+				/>
+				<button 
+					type="submit" 
+					className="px-4 py-2 bg-indigo-500 text-white rounded-b hover:bg-indigo-600 transition-colors w-full"
+				>
 					Submit
 				</button>
 			</form>

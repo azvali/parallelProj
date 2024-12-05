@@ -49,8 +49,7 @@ const svgIcons = {
 	),
 };
 
-export default function Viewer({ entries }: { entries: ChangelogEntries }) {
-	console.log(entries)
+export default function Viewer({ entries, timeTaken }: { entries: ChangelogEntries, timeTaken: number }) {
 	const sections = [
 		{ key: 'title', value: entries.title },
 		{ key: 'feature', value: entries.whatsNew },
@@ -73,6 +72,7 @@ export default function Viewer({ entries }: { entries: ChangelogEntries }) {
 						</div>
 					)
 				)}
+				<p className="text-sm opacity-70 font-medium text-center">Generated in {(timeTaken / 10).toFixed(2)}s</p>
 			</div>
 		</div>
 	);
