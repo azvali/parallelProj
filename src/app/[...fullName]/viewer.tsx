@@ -13,11 +13,11 @@ const readableTypes = {
 } as const;
 
 export interface ChangelogEntries {
-    title: string;
-    whatsNew: string;
-    bugFixes: string;
-    improvements: string;
-    breakingChanges: string;
+	title: string;
+	whatsNew: string;
+	bugFixes: string;
+	improvements: string;
+	breakingChanges: string;
 }
 
 const svgIcons = {
@@ -49,13 +49,13 @@ const svgIcons = {
 	),
 };
 
-export default function Viewer({ entries, timeTaken }: { entries: ChangelogEntries, timeTaken: number }) {
+export default function Viewer({ entries, timeTaken }: { entries: ChangelogEntries; timeTaken: number }) {
 	const sections = [
-		{ key: 'title', value: entries.title },
-		{ key: 'feature', value: entries.whatsNew },
-		{ key: 'bugfix', value: entries.bugFixes },
-		{ key: 'improvement', value: entries.improvements },
-		{ key: 'breakingChange', value: entries.breakingChanges }
+		{ key: "title", value: entries.title },
+		{ key: "feature", value: entries.whatsNew },
+		{ key: "bugfix", value: entries.bugFixes },
+		{ key: "improvement", value: entries.improvements },
+		{ key: "breakingChange", value: entries.breakingChanges },
 	];
 
 	return (
@@ -64,11 +64,20 @@ export default function Viewer({ entries, timeTaken }: { entries: ChangelogEntri
 				{sections.map(({ key, value }) =>
 					!value ? null : (
 						<div key={key} className="w-full max-w-full">
-							<h3 className="w-full flex items-center gap-2">
-								{svgIcons[key as keyof typeof svgIcons]}
-								{readableTypes[key as keyof typeof readableTypes]}
-							</h3>
-							<p className="w-full">{value}</p>
+							{key === "title" ? (
+								<h2 className="w-full flex items-center gap-2">
+									{svgIcons[key as keyof typeof svgIcons]}
+									{value}
+								</h2>
+							) : (
+								<div>
+									<h3 className="w-full flex items-center gap-2">
+										{svgIcons[key as keyof typeof svgIcons]}
+										{readableTypes[key as keyof typeof readableTypes]}
+									</h3>
+									<p className="w-full">{value}</p>
+								</div>
+							)}
 						</div>
 					)
 				)}
