@@ -2,33 +2,38 @@ import { Commit } from "@/types/repo";
 import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 
-
 // Allow streaming responses up to 10 seconds
-export const maxDuration = 10;
+export const maxDuration = 4;
 
 export async function POST(req: Request) {
 	const { repoName, commitId } = await req.json();
 	const diffs = await getDiffsFromCommit(repoName, commitId);
-
-	const {text} = await generateText({
+	const { text } = await generateText({
 		model: openai("gpt-4o-mini"),
 		prompt: await createPrompt(diffs.commitMessage, diffs.files),
-		temperature: 0.7, // Adds some creativity 
+		temperature: 0.7, // Adds some creativity
 		maxTokens: 100, // Ensures we get a concise response
 	});
+	console.log(text);
 
 	return new Response(text);
 }
 
 async function getDiffsFromCommit(repoName: string, commitId: string) {
-	const response = await fetch(`https://api.github.com/repos/${repoName}/commits/${commitId}`, {
+	const url = `https://api.github.com/repos/${repoName}/commits/${commitId}`;
+
+	const response = await fetch(url, {
 		headers: {
-			Accept: "application/vnd.github.v3+json",
-			"X-GitHub-Api-Version": "2022-11-28",
+			Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
 		},
 	});
 
+	console.log("Response status:", response.status);
+	console.log("Response status text:", response.statusText);
+
 	if (!response.ok) {
+		const errorText = await response.text();
+		console.error("Error response:", errorText);
 		throw new Error(`GitHub API error: ${response.statusText}`);
 	}
 
@@ -73,7 +78,6 @@ ${diffsSummary}
 
 Changelog entry:`;
 }
-
 
 interface DiffFile {
 	filename: string;
